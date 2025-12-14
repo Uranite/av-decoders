@@ -1,5 +1,6 @@
 use std::{
     ffi::CString,
+    ffi::c_char,
     path::Path,
     slice,
     str::FromStr,
@@ -514,7 +515,7 @@ unsafe fn empty_error_info() -> FFMS_ErrorInfo {
     let mut err: FFMS_ErrorInfo = std::mem::zeroed();
     // Allocate 1024 bytes for the error buffer
     let buffer = vec![0u8; ERR_BUFFER_SIZE];
-    let buffer_ptr = buffer.as_ptr() as *mut i8;
+    let buffer_ptr = buffer.as_ptr() as *mut c_char;
     std::mem::forget(buffer); // Prevent Rust from freeing the buffer
     err.Buffer = buffer_ptr;
     err.BufferSize = ERR_BUFFER_SIZE as i32;
